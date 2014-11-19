@@ -125,6 +125,12 @@ protected:
                                        bool                required,
                                        double&             reduction);
 
+  static ParseStatus getJointElastic(const TiXmlElement& parent_el,
+                                      const std::string&  joint_name,
+                                      const std::string&  transmission_name,
+                                      bool                required,
+                                      double&             elastic);
+
   static ParseStatus getJointOffset(const TiXmlElement& parent_el,
                                     const std::string&  joint_name,
                                     const std::string&  transmission_name,
