@@ -25,6 +25,14 @@
     </description>
   </class>
 
+  <class name="transmission_interface/AdaptiveSynergyTransmission"
+         type="transmission_interface::AdaptiveSynergyTransmissionLoader"
+         base_class_type="transmission_interface::TransmissionLoader">
+    <description>
+      Load from a URDF description the configuration of an adaptive synergy transmission.
+    </description>
+  </class>
+
   <!-- Hardware interfaces -->
   <class name="hardware_interface/JointStateInterface"
          type="transmission_interface::JointStateInterfaceProvider"
