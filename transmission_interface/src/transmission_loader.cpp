@@ -106,6 +106,40 @@ TransmissionLoader::getJointReduction(const TiXmlElement& parent_el,
 }
 
 TransmissionLoader::ParseStatus
+TransmissionLoader::getJointElastic(const TiXmlElement& parent_el,
+                                      const std::string&  joint_name,
+                                      const std::string&  transmission_name,
+                                      bool                required,
+                                      double&             elastic)
+{
+  // Get XML element
+  const TiXmlElement* elastic_el = parent_el.FirstChildElement("mechanicalElasticity");
+  if(!elastic_el)
+  {
+    if (required)
+    {
+      ROS_ERROR_STREAM_NAMED("parser", "Joint '" << joint_name << "' of transmission '" << transmission_name <<
+                             "' does not specify the required <mechanicalElasticity> element.");
+    }
+    else
+    {
+      ROS_DEBUG_STREAM_NAMED("parser", "Joint '" << joint_name << "' of transmission '" << transmission_name <<
+                             "' does not specify the optional <mechanicalElasticity> element.");
+    }
+    return NO_DATA;
+  }  
+  // Cast to number
+  try {elastic = boost::lexical_cast<double>(elastic_el->GetText());}
+  catch (const boost::bad_lexical_cast&)
+  {
+    ROS_ERROR_STREAM_NAMED("parser", "Joint '" << joint_name << "' of transmission '" << transmission_name <<
+                           "' specifies the <mechanicalElasticity> element, but is not a number.");
+    return BAD_TYPE;
+  }
+  return SUCCESS;
+}
+
+TransmissionLoader::ParseStatus
 TransmissionLoader::getJointOffset(const TiXmlElement& parent_el,
                                    const std::string&  joint_name,
                                    const std::string&  transmission_name,
